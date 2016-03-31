@@ -1,0 +1,27 @@
+jenkins_repo_url: http://pkg.jenkins-ci.org/redhat/jenkins.repo
+jenkins_repo_key_url: http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
+
+slaves:
+- name: oc
+  host: cccp-node1.example.com
+  labels: oc
+  capacity: 1
+  description: Openshift slave
+
+private: ~/workspace/centos
+
+plugins:
+- github
+
+jenkins_connection_delay: 5
+jenkins_connection_retries: 60
+jenkins_hostname: localhost
+jenkins_http_port: 8080
+jenkins_jar_location: /opt/jenkins-cli.jar
+jenkins_plugins:
+  - git
+  - sonar
+  - ssh
+jenkins_url_prefix: ""
+
+jenkins_private_key_file: ~/.ssh/id_rsa
