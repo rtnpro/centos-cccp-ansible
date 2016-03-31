@@ -1,0 +1,16 @@
+---
+- name: Ensure java is not installed
+  yum: name=java state=absent
+  tags:
+  - jenkins
+  - jenkins/master
+  - jenkins/slave
+  - config
+
+- name: install deps on jenkins nodes
+  yum: name=java-1.7.0-openjdk state=present
+  tags:
+  - jenkins
+  - jenkins/master
+  - jenkins/slave
+  - config
