@@ -1,0 +1,9 @@
+---
+- name: Install docker
+  yum: name={{item}} state=installed
+  with_items:
+    - docker
+    - git
+
+- name: Start Docker service
+  service: name=docker state=started

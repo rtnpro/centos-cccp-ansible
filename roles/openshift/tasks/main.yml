@@ -1,0 +1,15 @@
+---
+- include: install.yml
+
+- include: config.yml
+
+- name: Run openshift docker image
+  docker:
+    name: origin
+    image: {origin_image_name}
+    privileged: yes
+    pid: host
+    net: host
+    volumes: "{{ openshift_volumes }}"
+    command: start --master=https://"{ansible_default_ipv4.address}":8443 --etcd-dir="{openshift_etcd_dir}" --cors-allowed-origins=.*
+
