@@ -1,0 +1,21 @@
+---
+- name: Configure Jenkins nodes
+  hosts: all
+  roles:
+    - jenkins/common
+
+- name: Setup jenkins slaves
+  hosts: jenkins_slaves
+  roles:
+    - jenkins/slave
+
+- name: Setup jenkins master
+  hosts: jenkins_master
+  roles:
+    - jenkins/master
+
+- name: Setup openshift
+  hosts: openshift
+  roles:
+    - openshift
+  
