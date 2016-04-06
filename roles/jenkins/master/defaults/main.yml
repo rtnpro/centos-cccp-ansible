@@ -20,8 +20,10 @@ jenkins_http_port: 8080
 jenkins_jar_location: /opt/jenkins-cli.jar
 jenkins_plugins:
   - git
-  - sonar
   - ssh
+  - multiple-scms
+  - python
+  - ws-cleanup
 jenkins_url_prefix: ""
 
 jenkins_private_key_file: ~/.ssh/id_rsa
