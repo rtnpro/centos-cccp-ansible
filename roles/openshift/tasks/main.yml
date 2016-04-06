@@ -3,30 +3,4 @@
 
 - include: config.yml
 
-- name: Create openshift shared dirs
-  file: name={{item}} state=directory
-  with_items: "{{ openshift_shared_dirs }}"
-
-- name: Set SELinux context for openshift shared dirs
-  command: chcon -Rt svirt_sandbox_file_t {{ item }}
-  with_items: "{{ openshift_shared_dirs }}"
-
-- name: Run openshift docker image
-  docker:
-    name: origin
-    image: "{{ origin_image_name }}"
-    privileged: yes
-    pid: host
-    net: host
-    volumes: "{{ openshift_volumes }}"
-    command: start --master=https://"{{ansible_default_ipv4.address}}":8443 --etcd-dir="{{openshift_etcd_dir}}" --cors-allowed-origins=.*
-
-- name: Wait for Openshift to come up
-  pause: minutes=1
-
-- name: Copy Openshift binaries
-  command: docker cp origin:{{item}} {{item}}; chmod +x {{item}}
-  with_items:
-    - /usr/bin/oc
-    - /usr/bin/oadm
-
+- include: setup.yml

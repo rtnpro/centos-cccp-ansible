@@ -1,0 +1,25 @@
+---
+- name: Setup openshift registry
+  command: "{{item}}"
+  with_items:
+    - oadm registry --create --credentials={{ openshift_dir }}/openshift-registry.kubeconfig
+    - oadm policy add-scc-to-group anyuid system:authenticated
+  environment:
+    KUBECONFIG: "{{ kubeconfig }}"
+
+- name: Setup openshift router
+  shell: "{{ item }}"
+  with_items:
+    - oc get scc privileged -o json | sed '/\"users\"/a \"system:serviceaccount:default:router\",' | oc replace scc privileged -f -
+    - oadm router --create --credentials={{ openshift_dir }}/openshift-router.kubeconfig --service-account=router
+  environment:
+    KUBECONFIG: "{{ kubeconfig }}"
+
+- name: Create test user and project
+  command: "{{ item }}"
+  with_items:
+    - "oadm policy add-role-to-user view test-admin --config={{ kubeconfig }}"
+    - "oc login https://{{ansible_default_ipv4.address}}:8443 -u test-admin -p test --certificate-authority={{ openshift_dir}}/ca.crt"
+    - "oc new-project test --display-name='Openshift 3 Sample' --description='This is an example project to demonstrate Openshift v3'"
+  environment:
+    KUBECONFIG: "{{ kubeconfig }}"
