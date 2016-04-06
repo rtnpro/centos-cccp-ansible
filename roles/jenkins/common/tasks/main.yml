@@ -8,7 +8,10 @@
   - config
 
 - name: install deps on jenkins nodes
-  yum: name=java-1.7.0-openjdk state=present
+  yum: name={{ item }} state=present
+  with_items:
+   - java-1.7.0-openjdk
+   - git
   tags:
   - jenkins
   - jenkins/master
