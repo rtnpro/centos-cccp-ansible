@@ -3,7 +3,7 @@ jenkins_repo_key_url: http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
 
 slaves:
 - name: oc
-  host: cccp-node1.example.com
+  host: cccp-node2.example.com
   labels: oc
   capacity: 1
   description: Openshift slave

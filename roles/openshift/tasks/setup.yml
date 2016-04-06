@@ -6,6 +6,7 @@
     - oadm policy add-scc-to-group anyuid system:authenticated
   environment:
     KUBECONFIG: "{{ kubeconfig }}"
+  ignore_errors: yes
 
 - name: Setup openshift router
   shell: "{{ item }}"
@@ -14,6 +15,7 @@
     - oadm router --create --credentials={{ openshift_dir }}/openshift-router.kubeconfig --service-account=router
   environment:
     KUBECONFIG: "{{ kubeconfig }}"
+  ignore_errors: yes
 
 - name: Create test user and project
   command: "{{ item }}"
@@ -23,3 +25,4 @@
     - "oc new-project test --display-name='Openshift 3 Sample' --description='This is an example project to demonstrate Openshift v3'"
   environment:
     KUBECONFIG: "{{ kubeconfig }}"
+  ignore_errors: yes

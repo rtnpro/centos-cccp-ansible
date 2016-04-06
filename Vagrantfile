@@ -8,7 +8,7 @@ end
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  num_nodes = (ENV['OPENSHIFT_NUM_NODES'] || 1).to_i
+  num_nodes = (ENV['OPENSHIFT_NUM_NODES'] || 2).to_i
 
   config.hostmanager.enabled = true
   config.hostmanager.manage_host = true
@@ -59,7 +59,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.define "node#{node_index}" do |node|
       node.vm.hostname = "cccp-node#{node_index}.example.com"
       node.vm.network :private_network, ip: "192.168.100.#{200 + n}"
-      node.vm.synced_folder ".", "/home/vagrant/sync", disabled: true
+      node.vm.synced_folder ".", "/home/vagrant/sync", type: "nfs"
       # config.vm.provision "shell", inline: "nmcli connection reload; systemctl restart NetworkManager.service"
     end
   end
@@ -74,7 +74,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.sudo = true
       ansible.groups = {
         "jenkins_master" => ["master"],
-        "jenkins_slaves" => ["node1"],
+        "jenkins_slaves" => ["node2"],
         "openshift"      => ["node1"]
       }
       ansible.playbook = "vagrant.yml"
