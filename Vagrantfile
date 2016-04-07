@@ -10,7 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   num_nodes = (ENV['OPENSHIFT_NUM_NODES'] || 2).to_i
 
-  config.hostmanager.enabled = true
+  config.vm.provision :hostmanager
   config.hostmanager.manage_host = true
   config.hostmanager.include_offline = true
   config.ssh.insert_key = false
