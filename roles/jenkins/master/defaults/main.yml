@@ -27,3 +27,6 @@ jenkins_plugins:
 jenkins_url_prefix: ""
 
 jenkins_private_key_file: ~/.ssh/id_rsa
+
+jenkins_admin_username: admin
+jenkins_admin_password: admin
