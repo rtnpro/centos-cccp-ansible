@@ -5,4 +5,6 @@
 
 - include: plugins.yml
 
+- include: account.yml
+
 - include: config.yml

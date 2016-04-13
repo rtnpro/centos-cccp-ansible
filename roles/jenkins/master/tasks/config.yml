@@ -15,7 +15,7 @@
     src="{{ item }}"
     dest="/var/lib/jenkins/{{ item }}"
   with_items:
-#  - config.xml
+  - config.xml
   - credentials.xml
 #  - hudson.tasks.Mailer.xml
   notify:
@@ -58,5 +58,3 @@
   - config
   notify:
   - restart jenkins
-
-

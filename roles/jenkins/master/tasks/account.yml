@@ -1,0 +1,6 @@
+---
+# Create admin user
+- name: Create admin user
+  shell: >
+    echo 'hpsr=new hudson.security.HudsonPrivateSecurityRealm(true); hpsr.createAccount("admin", "admin")' | java -jar  {{ jenkins_jar_location }} -s  http://{{ jenkins_hostname }}:{{ jenkins_http_port }}/ groovy =
+    creates=/var/lib/jenkins/user.json
