@@ -30,7 +30,7 @@
       with_items:
         - {src: /usr/bin/oc, dest: /tmp/oc}
         - {src: /var/lib/origin/openshift.local.config/master/ca.crt, dest: /tmp/oc_ca.crt}
-      delegate_to: localhost
+      # delegate_to: localhost
 
 - name: Push oc files to Jenkins slaves
   hosts: jenkins_slaves
