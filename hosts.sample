@@ -1,0 +1,13 @@
+[all:children]
+jenkins_master
+jenkins_slaves
+openshift
+
+[jenkins_master]
+cccp-master.example.com
+
+[jenkins_slaves]
+cccp-node1.example.com
+
+[openshift]
+cccp-node2.example.com
