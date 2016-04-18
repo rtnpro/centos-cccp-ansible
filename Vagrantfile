@@ -52,14 +52,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     override.vm.box_download_checksum_type = "sha256"
   end
 
-  config.vm.synced_folder ".", "/home/vagrant/sync", type: "nfs"
+  config.vm.synced_folder ".", "/home/vagrant/sync", disabled: true
 
   num_nodes.times do |n|
     node_index = n+1
     config.vm.define "node#{node_index}" do |node|
       node.vm.hostname = "cccp-node#{node_index}.example.com"
       node.vm.network :private_network, ip: "192.168.100.#{200 + n}"
-      node.vm.synced_folder ".", "/home/vagrant/sync", type: "nfs"
+      node.vm.synced_folder ".", "/home/vagrant/sync", disabled: true
       # config.vm.provision "shell", inline: "nmcli connection reload; systemctl restart NetworkManager.service"
     end
   end
