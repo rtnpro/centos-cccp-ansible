@@ -3,8 +3,8 @@
   yum: pkg=curl state=installed
 
 - name: Ensure Jenkins repo is installed.
-  get_url:
-    url: "{{ jenkins_repo_url }}"
+  copy:
+    src: jenkins.repo
     dest: /etc/yum.repos.d/jenkins.repo
 
 - name: Add Jenkins repo GPG key.
