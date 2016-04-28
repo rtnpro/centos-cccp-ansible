@@ -8,12 +8,13 @@
   hosts: jenkins_slaves
   roles:
     - jenkins/slave
+    - registry
+    - nginx
 
 - name: Setup jenkins master
   hosts: jenkins_master
   roles:
     - jenkins/master
-    - nginx
 
 - name: Setup openshift
   hosts: openshift
