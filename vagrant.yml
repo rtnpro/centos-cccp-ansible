@@ -19,6 +19,8 @@
 - name: Setup jenkins master
   hosts: jenkins_master
   roles:
+    - jenkins/master
+  tags:
     - jenkins
     - jenkins/master
 
