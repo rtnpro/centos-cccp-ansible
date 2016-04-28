@@ -8,3 +8,8 @@
 - include: account.yml
 
 - include: config.yml
+
+- include: jobs.yml
+  tags:
+    - jenkins
+    - jobs
