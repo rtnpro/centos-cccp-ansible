@@ -1,0 +1,23 @@
+---
+  - name: Enable epel repo
+    sudo: yes
+    yum: name=epel-release state=present
+
+  - name: Install nginx
+    sudo: yes
+    yum: name=nginx state=present
+    tags:
+      - nginx
+
+  - name: Copy nginx conf for jenkins
+    sudo: yes
+    template: src={{ nginx_conf_template }} dest=/etc/nginx/conf.d/{{ nginx_conf_filename }}
+    tags:
+      - nginx
+
+  - name: restart nginx
+    sudo: yes
+    service: name=nginx state=restarted enabled=yes
+    tags:
+      - nginx
+

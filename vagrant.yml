@@ -13,6 +13,7 @@
   hosts: jenkins_master
   roles:
     - jenkins/master
+    - nginx
 
 - name: Setup openshift
   hosts: openshift
