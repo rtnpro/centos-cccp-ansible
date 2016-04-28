@@ -3,6 +3,8 @@
   hosts: all
   roles:
     - jenkins/common
+  tags:
+    - jenkins
 
 - name: Setup jenkins slaves
   hosts: jenkins_slaves
@@ -10,15 +12,21 @@
     - jenkins/slave
     - registry
     - nginx
+  tags:
+    - jenkins
+    - jenkins/slaves
 
 - name: Setup jenkins master
   hosts: jenkins_master
   roles:
+    - jenkins
     - jenkins/master
 
 - name: Setup openshift
   hosts: openshift
   roles:
+    - openshift
+  tags:
     - openshift
 
 - name: Fetch oc files
@@ -33,6 +41,8 @@
         - {src: /usr/bin/oc, dest: /tmp/oc}
         - {src: /var/lib/origin/openshift.local.config/master/ca.crt, dest: /tmp/oc_ca.crt}
       # delegate_to: localhost
+  tags:
+    - openshift/jenkins
 
 - name: Push oc files to Jenkins slaves
   hosts: jenkins_slaves
@@ -56,3 +66,5 @@
       with_items:
         - https://raw.githubusercontent.com/bamachrn/cccp-service/master/client/build-project.sh
         - https://raw.githubusercontent.com/bamachrn/cccp-service/master/client/template.json
+  tags:
+    - openshift/jenkins
