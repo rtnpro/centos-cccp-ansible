@@ -24,3 +24,5 @@ openshift_dir: /var/lib/origin/openshift.local.config/master
 kubeconfig: /var/lib/origin/openshift.local.config/master/admin.kubeconfig
 
 ose_tag: ose-v1.2.0-1
+
+public_registry: registry.centos.org

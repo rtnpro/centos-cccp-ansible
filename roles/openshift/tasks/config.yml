@@ -3,7 +3,10 @@
   replace: >
     dest=/etc/sysconfig/docker
     regexp="^#\s*INSECURE_REGISTRY=.*"
-    replace='INSECURE_REGISTRY="--insecure-registry 172.30.0.0/16"'
+    replace='INSECURE_REGISTRY="--insecure-registry 172.30.0.0/16 --insecure-registry {{ public_registry }}:5000"'
+
+- name: Restart Docker
+  service: name=docker state=restarted
 
 - name: Create openshift shared dirs
   file: name={{item}} state=directory
