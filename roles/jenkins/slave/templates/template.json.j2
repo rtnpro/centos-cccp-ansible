@@ -22,7 +22,7 @@
       "description": "A secret to be used to trigger a build via Origin API",
       "value": "secret101"
     },
-{
+	{
       "name": "TARGET_REGISTRY",
       "description": "An URL of a registry where to push the final image",
       "value": "{{ public_registry }}:5000"
@@ -61,9 +61,9 @@
       "kind": "ImageStream",
       "apiVersion": "v1",
       "metadata": {
-        "name": "",
+        "name": "${TAG}",
         "annotations": {
-          "description": "Keeps track of changes in the image "
+          "description": "Keeps track of changes in the image ${TAG}"
         }
       }
     },
@@ -78,14 +78,14 @@
           {
             "type": "Generic",
             "generic": {
-              "secret": ""
+              "secret": "${BUILD_TRIGGER_SECRET}"
             }
           }
         ],
         "source": { 
           "type": "Git",
           "git": {
-            "uri": ""
+            "uri": "${SOURCE_REPOSITORY_URL}"
           }
         },
         "strategy": { 
@@ -99,15 +99,15 @@
             "env": [
               {
                 "name": "TAG",
-                "value": ":test"
+                "value": "${TAG}:test"
               },
               {
                 "name": "SOURCE_REPOSITORY_URL",
-                "value": ""
+                "value": "${SOURCE_REPOSITORY_URL}"
               },
               {
                 "name": "REPO_BUILD_PATH",
-                "value": ""
+                "value": "${REPO_BUILD_PATH}"
               }
             ]
           }
@@ -115,7 +115,7 @@
         "output": { 
           "to": {
             "kind": "ImageStreamTag",
-            "name": ":test"
+            "name": "${TAG}:test"
           }
         }
       }
@@ -131,7 +131,7 @@
           {
             "type": "Generic",
             "generic": {
-              "secret": ""
+              "secret": "${BUILD_TRIGGER_SECRET}"
             }
           },
           {
@@ -139,7 +139,7 @@
             "imageChange": {
               "from": {
                 "kind": "ImageStreamTag",
-                "name": ":test"
+                "name": "${TAG}:test"
               }
             }
           }
@@ -155,19 +155,19 @@
             "env": [
               {
                 "name": "FROM",
-                "value": ":test"
+                "value": "${TAG}:test"
               },
               {
                 "name": "TO",
-                "value": ":rc"
+                "value": "${TAG}:rc"
               },
               {
                 "name": "REPO_TEST_PATH",
-                "value": ""
+                "value": "${REPO_TEST_PATH}"
               },
               {
                 "name": "SOURCE_REPOSITORY_URL",
-                "value": ""
+                "value": "${SOURCE_REPOSITORY_URL}"
               }
 
             ]
@@ -176,7 +176,7 @@
         "output": { 
           "to": {
             "kind": "ImageStreamTag",
-            "name": ":rc"
+            "name": "${TAG}:rc"
           }
         }
       }
@@ -192,7 +192,7 @@
           {
             "type": "Generic",
               "generic": {
-              "secret": ""
+              "secret": "${BUILD_TRIGGER_SECRET}"
             }
           },
           {
@@ -200,7 +200,7 @@
             "imageChange": {
               "from": {
                 "kind": "ImageStreamTag",
-                "name": ":rc"
+                "name": "${TAG}:rc"
               }
             }
           }
@@ -216,23 +216,23 @@
             "env": [
               {
                 "name": "FROM",
-                "value": ":rc"
+                "value": "${TAG}:rc"
               },
               {
                 "name": "TO",
-                "value": ":latest"
+                "value": "${TAG}:latest"
               },
               {
                 "name": "TARGET_REGISTRY",
-                "value": ""
+                "value": "${TARGET_REGISTRY}"
               },
               {
                 "name": "TARGET_NAMESPACE",
-                "value": ""
+                "value": "${TARGET_NAMESPACE}"
               },
               {
                 "name": "NOTIFY_EMAIL",
-                "value": ""
+                "value": "${NOTIFY_EMAIL}"
               }
             ]
           }
@@ -240,7 +240,7 @@
         "output": { 
           "to": {
             "kind": "ImageStreamTag",
-            "name": ":rc"
+            "name": "${TAG}:rc"
           }
         }
       }
