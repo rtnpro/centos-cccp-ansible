@@ -21,3 +21,7 @@
   - jenkins
   - jenkins/slave
   - config
+
+- include: setup_oc.yml
+  tags:
+   - openshift/jenkins

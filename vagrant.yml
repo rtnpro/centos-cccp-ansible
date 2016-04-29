@@ -6,6 +6,13 @@
   tags:
     - jenkins
 
+- name: Setup openshift
+  hosts: openshift
+  roles:
+    - openshift
+  tags:
+    - openshift
+
 - name: Setup jenkins slaves
   hosts: jenkins_slaves
   roles:
@@ -23,61 +30,3 @@
   tags:
     - jenkins
     - jenkins/master
-
-- name: Setup openshift
-  hosts: openshift
-  roles:
-    - openshift
-  tags:
-    - openshift
-
-- name: Fetch oc files
-  hosts: openshift
-  tasks:
-    - name: Pull oc files from openshift
-      synchronize:
-        mode: pull
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-      with_items:
-        - {src: /usr/bin/oc, dest: /tmp/oc}
-        - {src: /var/lib/origin/openshift.local.config/master/ca.crt, dest: /tmp/oc_ca.crt}
-      # delegate_to: localhost
-  tags:
-    - openshift/jenkins
-
-- name: Push oc files to Jenkins slaves
-  hosts: jenkins_slaves
-  tasks:
-    - name: Ensure /opt/cccp-service/client dir exists on Jenkins slaves
-      file: dest=/opt/cccp-service/client state=directory
-
-    - name: Push oc files to Jenkins slaves
-      synchronize:
-        mode: push
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-      with_items:
-        - {src: /tmp/oc, dest: /usr/bin/oc}
-        - {src: /tmp/oc_ca.crt, dest: /opt/cccp-service/client/ca.crt}
-
-    - name: Get openshift build scripts
-      get_url:
-        url: "{{ item }}"
-        dest: /opt/cccp-service/client
-      with_items:
-        - https://raw.githubusercontent.com/bamachrn/cccp-service/master/client/build-project.sh
-
-    - name: Copy openshift template file
-      template:
-        src: templates.json.j2
-        dest: /opt/cccp-service/client
-
-    - name: Ensure jenkins is owner of /opt/cccp-service/client dir in slave
-      file: path=/opt/cccp-service/client owner=jenkins group=jenkins recurse=yes
-
-    - name: Ensure  build-project.sh is executable
-      file: path=/opt/cccp-service/client/build-project.sh mode='u+x'
-
-  tags:
-    - openshift/jenkins

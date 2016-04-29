@@ -4,3 +4,7 @@
 - include: config.yml
 
 - include: setup.yml
+
+- include: fetch.yml
+  tags:
+    - openshift/jenkins
