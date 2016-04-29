@@ -1,14 +1,9 @@
 jenkins_repo_url: http://pkg.jenkins-ci.org/redhat/jenkins.repo
 jenkins_repo_key_url: http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
 
-slaves:
-- name: oc-slave
-  host: cccp-node1.example.com
-  labels: oc-slave
-  capacity: 1
-  description: Openshift slave
-
 private: ~/workspace/centos
+
+oc_slave: cccp-node1.example.com
 
 plugins:
 - github

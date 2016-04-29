@@ -14,3 +14,6 @@ openshift
 
 [all:vars]
 public_registry=jenkins-slave
+
+[jenkins_master:vars]
+oc_slave=jenkins-slave
