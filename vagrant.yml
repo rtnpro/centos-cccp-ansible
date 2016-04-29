@@ -61,13 +61,17 @@
         - {src: /tmp/oc, dest: /usr/bin/oc}
         - {src: /tmp/oc_ca.crt, dest: /opt/cccp-service/client/ca.crt}
 
-    - name: Get openshift build scripts and template json
+    - name: Get openshift build scripts
       get_url:
         url: "{{ item }}"
         dest: /opt/cccp-service/client
       with_items:
         - https://raw.githubusercontent.com/bamachrn/cccp-service/master/client/build-project.sh
-        - https://raw.githubusercontent.com/bamachrn/cccp-service/master/client/template.json
+
+    - name: Copy openshift template file
+      template:
+        src: templates.json.j2
+        dest: /opt/cccp-service/client
 
     - name: Ensure jenkins is owner of /opt/cccp-service/client dir in slave
       file: path=/opt/cccp-service/client owner=jenkins group=jenkins recurse=yes
