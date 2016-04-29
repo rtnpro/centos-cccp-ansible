@@ -13,7 +13,9 @@ jenkins-slave
 openshift
 
 [all:vars]
+# update as needed
 public_registry=jenkins-slave
 
 [jenkins_master:vars]
+# update as needed
 oc_slave=jenkins-slave
