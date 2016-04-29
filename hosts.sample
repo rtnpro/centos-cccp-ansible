@@ -4,10 +4,13 @@ jenkins_slaves
 openshift
 
 [jenkins_master]
-cccp-master.example.com
+jenkins-master
 
 [jenkins_slaves]
-cccp-node1.example.com
+jenkins-slave
 
 [openshift]
-cccp-node2.example.com
+openshift
+
+[all:vars]
+public_registry=jenkins-slave
