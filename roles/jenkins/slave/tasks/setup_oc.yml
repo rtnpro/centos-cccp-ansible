@@ -21,8 +21,8 @@
 
 - name: Copy openshift template file
   template:
-    src: templates.json.j2
-    dest: /opt/cccp-service/client
+    src: template.json.j2
+    dest: /opt/cccp-service/client/template.json
 
 - name: Ensure jenkins is owner of /opt/cccp-service/client dir in slave
   file: path=/opt/cccp-service/client owner=jenkins group=jenkins recurse=yes
