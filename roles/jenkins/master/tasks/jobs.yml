@@ -17,5 +17,8 @@
 - name: Copy Job template
   copy: src=index.yml.j2  dest={{ ansible_env.HOME }}/index.yml
 
+- name: Wait for Jenkins to get ready for jobs
+  pause: seconds=70
+
 - name: Push job to jenkins
   shell: jenkins-jobs --ignore-cache update {{ ansible_env.HOME}}/index.yml
