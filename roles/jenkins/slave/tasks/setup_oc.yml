@@ -27,11 +27,8 @@
 - name: Ensure jenkins is owner of /opt/cccp-service/client dir in slave
   file: path=/opt/cccp-service/client owner=jenkins group=jenkins recurse=yes
 
-- name: Replacing openshift fqdn for oc-slave to login to server
-  replace: >
-    dest=/opt/cccp-service/client/build-project.sh
-    regexp="https://openshift:8443"
-    replace='https://{{ groups['openshift'][0] }}:8443'
-
 - name: Ensure  build-project.sh is executable
   file: path=/opt/cccp-service/client/build-project.sh mode='u+x'
+
+- name: Add host entry for openshift server
+  shell: echo `ping {{ groups['openshift'][0] }} -c 1 | awk '{print $3}'|head -n 1|sed 's/(//'|sed 's/)//'` openshift >> /etc/hosts
