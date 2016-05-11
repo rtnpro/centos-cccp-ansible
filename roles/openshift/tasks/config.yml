@@ -28,7 +28,7 @@
   retries: 2
 
 - name: Wait for Openshift to come up
-  pause: seconds=15
+  pause: seconds=75
 
 - name: Copy Openshift binaries
   command: docker cp origin:/usr/bin/openshift {{item}}

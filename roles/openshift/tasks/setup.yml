@@ -8,6 +8,9 @@
     KUBECONFIG: "{{ kubeconfig }}"
   ignore_errors: yes
 
+- name: Wait for Openshift to come up
+  pause: seconds=75
+
 - name: Setup openshift router
   shell: "{{ item }}"
   with_items:
@@ -16,6 +19,9 @@
   environment:
     KUBECONFIG: "{{ kubeconfig }}"
   ignore_errors: yes
+
+- name: Wait for Openshift to come up
+  pause: seconds=75
 
 - name: Create test user and project
   command: "{{ item }}"
