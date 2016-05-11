@@ -1,7 +1,7 @@
 - include: install.yml
 
 - name: Wait for Jenkins to come up
-  pause: seconds=30 
+  pause: seconds=70 
 
 - include: plugins.yml
 
