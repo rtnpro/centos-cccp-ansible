@@ -27,8 +27,6 @@
   command: "{{ item }}"
   with_items:
     - "oadm policy add-role-to-user view test-admin --config={{ kubeconfig }}"
-    - "oc login https://{{ansible_default_ipv4.address}}:8443 -u test-admin -p test --certificate-authority={{ openshift_dir}}/ca.crt"
-    - "oc new-project test --display-name='Openshift 3 Sample' --description='This is an example project to demonstrate Openshift v3'"
   environment:
     KUBECONFIG: "{{ kubeconfig }}"
   ignore_errors: yes
