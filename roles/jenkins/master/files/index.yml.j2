@@ -5,7 +5,7 @@
     node: master
     scm:
         - git:
-            url: "https://github.com/kbsingh/cccp-index.git"
+            url: "{{ cccp_index_repo }}"
             skip-tag: True
     triggers:
         - pollscm: "H/10 * * * *" 
