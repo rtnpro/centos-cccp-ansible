@@ -23,10 +23,18 @@
 - name: Wait for Openshift to come up
   pause: seconds=75
 
-- name: Create test user and project
+- name: Create test user 
   command: "{{ item }}"
   with_items:
     - "oadm policy add-role-to-user view test-admin --config={{ kubeconfig }}"
+  environment:
+    KUBECONFIG: "{{ kubeconfig }}"
+  ignore_errors: yes
+
+- name: Create image pruner for cleaning up the system
+  command: "{{ item }}"
+  with_items:
+    - "oadm policy add-cluster-role-to-user system:image-pruner imageprune --config={{ kubeconfig }}"
   environment:
     KUBECONFIG: "{{ kubeconfig }}"
   ignore_errors: yes
