@@ -72,11 +72,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     master.vm.provision "ansible" do |ansible|
       ansible.limit = 'all'
       ansible.sudo = true
-      ansible.groups = {
-        "jenkins_master" => ["master"],
-        "jenkins_slaves" => ["node2"],
-        "openshift"      => ["node1"]
-      }
+      ansible.inventory_path = "./hosts.vagrant"
       ansible.playbook = "vagrant.yml"
     end
   end
