@@ -32,3 +32,9 @@
 
 - name: Add host entry for openshift server
   shell: echo `ping {{ groups['openshift'][0] }} -c 1 | awk '{print $3}'|head -n 1|sed 's/(//'|sed 's/)//'` openshift >> /etc/hosts
+
+- name: Create script for image prune
+  shell: echo "oc login --token=\`curl -k -L -D - -u imageprune:test -H 'X-CSRF-Token: 1' 'https://openshift:8443/oauth/authorize?response_type=token&client_id=openshift-challenging-client' 2>&1 | grep -oP \"access_token=\K[^&]*\"\`;oadm prune images;oc logout" > /usr/bin/delete_images.sh
+ 
+- name: Add cron job to cleanup old images
+  cron: name="registry cleanup" special_time=daily job="/usr/bin/delete_images.sh"
