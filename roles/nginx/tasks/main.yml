@@ -9,7 +9,16 @@
     tags:
       - nginx
 
-  - name: Copy nginx conf for jenkins
+  - name: Copy SSL certs
+    sudo: yes
+    template: src={{ item.src }} dest={{ item.dest }}
+    with_items:
+        - { src: "{{ ssl_key_template }}", dest: "{{ ssl_key_file }}" }
+        - { src: "{{ ssl_cert_template }}", dest: "{{ ssl_cert_file }}" }
+    when: copy_ssl_certs
+    tags: nginx
+
+  - name: Copy nginx conf for CentOS registry
     sudo: yes
     template: src={{ nginx_conf_template }} dest=/etc/nginx/conf.d/{{ nginx_conf_filename }}
     tags:
