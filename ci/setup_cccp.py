@@ -129,7 +129,7 @@ def test_if_openshift_builds_are_running(host):
         if retries > 0:
             time.sleep(60)
         print "Retries: %d/100" % retries
-        output = subprocess.check_output(_cmd)
+        output = subprocess.check_output(_cmd, shell=True)
         print output
         lines = output.splitlines()
         pods = set([line.split()[0] for line in lines[1:]])
@@ -156,7 +156,7 @@ def test_if_openshift_builds_persist(host):
         "StrictHostKeyChecking=no {user}@{host} '"
         "'{cmd}'"
     ).format(user='root', cmd=cmd, host=host)
-    output = subprocess.check_output(_cmd)
+    output = subprocess.check_output(_cmd, shell=True)
     print output
     lines = output.splitlines()
     pods = set([line.split()[0] for line in lines[1:]])
