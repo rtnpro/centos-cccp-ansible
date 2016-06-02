@@ -120,7 +120,7 @@ def test_if_openshift_builds_are_running(host):
     )
     _cmd = (
         "ssh -t -o UserKnownHostsFile=/dev/null -o "
-        "StrictHostKeyChecking=no {user}@{host} '"
+        "StrictHostKeyChecking=no {user}@{host} "
         "'{cmd}'"
     ).format(user='root', cmd=cmd, host=host)
     retries = 0
@@ -129,12 +129,15 @@ def test_if_openshift_builds_are_running(host):
         if retries > 0:
             time.sleep(60)
         print "Retries: %d/100" % retries
-        output = subprocess.check_output(_cmd, shell=True)
-        print output
-        lines = output.splitlines()
-        pods = set([line.split()[0] for line in lines[1:]])
-        success = pods == set(
-            ['build-1-build', 'delivery-1-build', 'test-1-build'])
+        try:
+            output = subprocess.check_output(_cmd, shell=True)
+            print output
+            lines = output.splitlines()
+            pods = set([line.split()[0] for line in lines[1:]])
+            success = pods == set(
+                ['build-1-build', 'delivery-1-build', 'test-1-build'])
+        except subprocess.CalledProcessError:
+            success = False
         retries += 1
     if success is False:
         raise Exception("Openshift builds not running.")
@@ -153,7 +156,7 @@ def test_if_openshift_builds_persist(host):
     )
     _cmd = (
         "ssh -t -o UserKnownHostsFile=/dev/null -o "
-        "StrictHostKeyChecking=no {user}@{host} '"
+        "StrictHostKeyChecking=no {user}@{host} "
         "'{cmd}'"
     ).format(user='root', cmd=cmd, host=host)
     output = subprocess.check_output(_cmd, shell=True)
