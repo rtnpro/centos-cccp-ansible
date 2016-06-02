@@ -15,7 +15,7 @@
   template: src=jenkins_jobs.ini.j2 dest=/etc/jenkins_jobs/jenkins_jobs.ini
 
 - name: Copy Job template
-  copy: src=index.yml.j2  dest={{ ansible_env.HOME }}/index.yml
+  template: src=index.yml.j2  dest={{ ansible_env.HOME }}/index.yml
 
 - name: Wait for Jenkins to get ready for jobs
   pause: seconds=70
