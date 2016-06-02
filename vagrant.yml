@@ -1,4 +1,14 @@
 ---
+- name: Disable requiretty in sudoers
+  hosts: all
+  tasks:
+    - name: Disable requiretty in sudoers
+      lineinfile:  dest=/etc/sudoers state=absent regexp="^Defaults    requiretty.*"
+      sudo: yes
+  tags:
+    - jenkins
+    - openshift
+
 - name: Configure Jenkins nodes
   hosts: all
   roles:
