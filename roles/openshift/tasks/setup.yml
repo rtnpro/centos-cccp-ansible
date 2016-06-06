@@ -9,7 +9,7 @@
   ignore_errors: yes
 
 - name: Wait for Openshift to come up
-  pause: seconds=75
+  pause: seconds={{ openshift_startup_delay }}
 
 - name: Setup openshift router
   shell: "{{ item }}"
@@ -21,7 +21,7 @@
   ignore_errors: yes
 
 - name: Wait for Openshift to come up
-  pause: seconds=75
+  pause: seconds={{ openshift_startup_delay }}
 
 - name: Create test user 
   command: "{{ item }}"
