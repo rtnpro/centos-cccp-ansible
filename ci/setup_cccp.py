@@ -13,6 +13,7 @@ import urllib
 import subprocess
 import os
 import time
+import sys
 
 url_base = os.environ.get('URL_BASE')
 api = os.environ.get('API')
@@ -30,6 +31,7 @@ def get_nodes(ver="7", arch="x86_64", count=4):
     with open('env.properties', 'a') as f:
         f.write('DUFFY_SSID=%s' % data['ssid'])
         f.close()
+    sys.stdout.write(resp)
     return data['hosts']
 
 
@@ -72,6 +74,7 @@ jenkins_private_key_file = jenkins.key
 jenkins_public_key_file = jenkins.key.pub
 cccp_index_repo=https://github.com/bamachrn/cccp-index.git
 copy_ssl_certs=true
+openshift_startup_delay=150
 
 [jenkins_master:vars]
 oc_slave={jenkins_slave_host}""").format(
@@ -113,7 +116,7 @@ def test_if_openshift_builds_are_running(host):
     print "Test if openshift builds are running"
     print "=" * 30
     cmd = (
-        "oc login https://localhost:8443 --insecure-skip-tls-verify=true "
+        "oc login https://openshift:8443 --insecure-skip-tls-verify=true "
         "-u test-admin -p test > /dev/null && "
         "oc project bamachrn-python > /dev/null && "
         "oc get pods"
@@ -128,10 +131,10 @@ def test_if_openshift_builds_are_running(host):
     while retries < 100 and success is False:
         if retries > 0:
             time.sleep(60)
-        print "Retries: %d/100" % retries
+        sys.stdout.write("Retries: %d/100" % retries)
         try:
             output = subprocess.check_output(_cmd, shell=True)
-            print output
+            sys.stdout.write(output)
             lines = output.splitlines()
             pods = set([line.split()[0] for line in lines[1:]])
             success = pods == set(
@@ -141,15 +144,15 @@ def test_if_openshift_builds_are_running(host):
         retries += 1
     if success is False:
         raise Exception("Openshift builds not running.")
-    print "Openshift builds running successfully."
+    sys.stdout.write("Openshift builds running successfully.")
 
 
 def test_if_openshift_builds_persist(host):
-    print "=" * 30
-    print "Test if openshift builds persist after reprovision"
-    print "=" * 30
+    sys.stdout.write("=" * 30)
+    sys.stdout.write("Test if openshift builds persist after reprovision")
+    sys.stdout.write("=" * 30)
     cmd = (
-        "oc login https://localhost:8443 --insecure-skip-tls-verify=true "
+        "oc login https://openshift:8443 --insecure-skip-tls-verify=true "
         "-u test-admin -p test > /dev/null && "
         "oc project bamachrn-python > /dev/null && "
         "oc get pods"
@@ -160,14 +163,14 @@ def test_if_openshift_builds_persist(host):
         "'{cmd}'"
     ).format(user='root', cmd=cmd, host=host)
     output = subprocess.check_output(_cmd, shell=True)
-    print output
+    sys.stdout.write(output)
     lines = output.splitlines()
     pods = set([line.split()[0] for line in lines[1:]])
     success = pods == set(
         ['build-1-build', 'delivery-1-build', 'test-1-build'])
     if success is False:
         raise Exception("Openshift builds did not persist after re provision.")
-    print "Openshift builds persited after re provision."
+    sys.stdout.write("Openshift builds persited after re provision.")
 
 
 def run():
@@ -178,19 +181,32 @@ def run():
     openshift_host = nodes[2]
     controller = nodes.pop()
 
+    nodes_env = (
+        "\nJENKINS_MASTER_HOST=%s\n"
+        "JENKINS_SLAVE_HOST=%s\n"
+        "OPENSHIFT_HOST=%s\n"
+        "CONTROLLER=%s\n"
+    ) % (jenkins_master_host, jenkins_slave_host,
+         openshift_host, controller)
+
+    with open('env.properties', 'a') as f:
+        f.write(nodes_env)
+
     generate_ansible_inventory(jenkins_master_host,
                                jenkins_slave_host,
                                openshift_host)
+
+    run_cmd('iptables -F', host=openshift_host)
 
     setup_controller(controller)
 
     provision(controller)
 
-    test_if_openshift_builds_are_running(openshift_host)
+    test_if_openshift_builds_are_running(jenkins_slave_host)
 
     provision(controller)
 
-    test_if_openshift_builds_persist(openshift_host)
+    test_if_openshift_builds_persist(jenkins_slave_host)
 
 if __name__ == '__main__':
     run()
