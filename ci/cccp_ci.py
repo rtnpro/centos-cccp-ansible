@@ -209,4 +209,5 @@ def run():
     test_if_openshift_builds_persist(jenkins_slave_host)
 
 if __name__ == '__main__':
+    # test
     run()
