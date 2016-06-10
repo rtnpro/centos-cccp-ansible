@@ -138,12 +138,6 @@ def wait_for_jenkins_to_come_up_and_trigger_builds(host):
         "build --username admin --password admin cccp-index",
         host=host)
 
-    time.sleep(20)
-
-    run_cmd("java -jar /opt/jenkins-cli.jar -s http://localhost:8080/ "
-            "build --username admin --password admin bamachrn-python",
-            host=host)
-
 
 def test_if_openshift_builds_are_running(host):
     print "=" * 30
