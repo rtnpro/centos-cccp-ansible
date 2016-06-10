@@ -48,14 +48,17 @@
             clean:
                 after: true
             credentials-id: 1d7dba44-5b34-42b3-886c-4d659ffb2aae
-            refspec: "{refspec}"
+            refspec: "+refs/pull/*:refs/remotes/origin/pr/*"
             branches:
-                - "{branch}"
+                - "${sha1}"
 
 - job:
     name: 'centos-cccp-ansible-ci-pr'
     node: container
     ci_project: container
+    properties:
+        - github:
+            url: https://github.com/rtnpro/centos-cccp-ansible/
     builders:
         - centos-cccp-ansible-ci-builders
     publishers:
@@ -64,9 +67,9 @@
               property-file: 'env.properties'
               condition: 'ALWAYS'
     scm:
-        - custom-scm-git:
-            refspec: "+refs/pull/*:refs/remotes/origin/pr/*"
-            branch: "${{sha1}}"
+        - custom-scm-git
+    triggers:
+        - custom-trigger
 
 - job:
     name: 'centos-cccp-ansible-ci-master'
