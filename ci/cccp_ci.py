@@ -133,10 +133,13 @@ def wait_for_jenkins_to_come_up_and_trigger_builds(host):
         raise Exception("Jenkins failed to run.")
     sys.stdout.write("Jenkins is running.")
 
-    run_cmd(
-        "java -jar /opt/jenkins-cli.jar -s http://localhost:8080/ "
-        "build --username admin --password admin cccp-index",
-        host=host)
+    # FIXME: currently openshift server cannot handle multiple build request
+    # for the same project at the same time. So, we are not rebuilding
+    # the projects, but just waiting for Jenkins to come up
+    # run_cmd(
+    #    "java -jar /opt/jenkins-cli.jar -s http://localhost:8080/ "
+    #    "build --username admin --password admin cccp-index",
+    #    host=host)
 
 
 def test_if_openshift_builds_are_running(host):
