@@ -111,34 +111,6 @@ def provision(controller):
         host=controller)
 
 
-def wait_for_jenkins_to_come_up_and_trigger_builds(host):
-    cmd = (
-        "ssh -t root@%s curl --head --silent http://localhost:8080/cli/"
-    ) % host
-    retries = 0
-    success = False
-    while retries < 100 and success is False:
-        if retries > 0:
-            time.sleep(10)
-        sys.stdout.write("\nRetries: %d/100" % retries)
-        try:
-            output = subprocess.check_output(cmd, shell=True)
-            sys.stdout.write(output)
-            if output.find('200 OK') >= 0:
-                success = True
-        except subprocess.CalledProcessError:
-            success = False
-        retries += 1
-    if success is False:
-        raise Exception("Jenkins failed to run.")
-    sys.stdout.write("Jenkins is running.")
-
-    run_cmd(
-        "java -jar /opt/jenkins-cli.jar -s http://localhost:8080/ "
-        "build --username admin --password admin cccp-index",
-        host=host)
-
-
 def test_if_openshift_builds_are_running(host):
     print "=" * 30
     print "Test if openshift builds are running"
@@ -229,8 +201,6 @@ def run():
     setup_controller(controller)
 
     provision(controller)
-
-    wait_for_jenkins_to_come_up_and_trigger_builds(jenkins_master_host)
 
     test_if_openshift_builds_are_running(jenkins_slave_host)
 

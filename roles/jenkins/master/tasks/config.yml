@@ -3,8 +3,6 @@
   copy: >
     src="jenkins.conf"
     dest="/etc/sysconfig/jenkins"
-  notify:
-  - restart jenkins
   tags:
   - jenkins
   - jenkins/master
@@ -18,8 +16,6 @@
   - config.xml
   - credentials.xml
 #  - hudson.tasks.Mailer.xml
-  notify:
-  - restart jenkins
   tags:
   - jenkins
   - jenkins/master
@@ -40,8 +36,6 @@
     src="slave-config.xml.j2"
     dest="/var/lib/jenkins/nodes/{{ item.name }}/config.xml"
   with_items: "{{ slaves }}"
-  notify:
-  - restart jenkins
   tags:
   - jenkins
   - jenkins/master
@@ -56,5 +50,3 @@
   - jenkins
   - jenkins/master
   - config
-  notify:
-  - restart jenkins
