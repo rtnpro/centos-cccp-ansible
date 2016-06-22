@@ -5,9 +5,9 @@
 - name: Install docker
   yum: name={{item}} state=installed
   with_items:
-    - docker-latest
+    - docker
     - git
     - python-docker-py
 
 - name: Start Docker service
-  service: name=docker-latest state=started
+  service: name=docker state=started
