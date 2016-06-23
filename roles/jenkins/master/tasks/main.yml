@@ -29,7 +29,7 @@
     - jobs
 
 - name: Copy script to monitor access to Jenkins slave from master using Zabbix
-  template: src=cron_check_slave_uptime.sh.j2 dest=/root/cron_check_slave_uptime.sh
+  template: src=cron_check_slave_uptime.sh.j2 dest=/root/cron_check_slave_uptime.sh mode=0755
   tags:
     - jenkins
     - monitor
