@@ -24,4 +24,8 @@
 
 - include: setup_oc.yml
   tags:
-   - openshift/jenkins
+  - openshift/jenkins
+
+- include: setup_worker.yml
+  tags:
+  - beanstalk/worker 

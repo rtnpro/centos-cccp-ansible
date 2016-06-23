@@ -8,6 +8,10 @@
     - docker
     - git
     - python-docker-py
+    - beanstalkd
 
 - name: Start Docker service
   service: name=docker state=started
+
+- name: Start beanstalkd service
+  service: name=beanstalkd state=started

@@ -1,0 +1,24 @@
+---
+#Push ca cert to slave for worker
+- name: Ensure /opt/cccp-service/beanstalk_worker dir exists on Jenkins slaves
+  file: dest=/opt/cccp-service/beanstalk_worker state=directory
+
+- name: Push oc files to Jenkins slaves
+  synchronize:
+    mode: push
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - {src: /tmp/oc_ca.crt, dest: /opt/cccp-service/beanstalk_worker/ca.crt}
+
+- name: Get openshift build scripts
+  get_url:
+    url: "{{ item }}"
+    dest: /opt/cccp-service/beanstalk_worker
+  with_items:
+    - https://raw.githubusercontent.com/bamachrn/cccp-service/master/beanstalk_worker/beanstalkc.py
+    - https://raw.githubusercontent.com/bamachrn/cccp-service/master/beanstalk_worker/worker_start_build.py
+    - https://raw.githubusercontent.com/bamachrn/cccp-service/master/beanstalk_worker/DependencyChecker.py
+
+- name: Ensure worker_start_build.py is executable
+  file: path=/opt/cccp-service/beanstalk_worker/worker_start_build.py mode='u+x'
