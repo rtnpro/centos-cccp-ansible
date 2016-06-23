@@ -20,7 +20,6 @@
     - https://raw.githubusercontent.com/bamachrn/cccp-service/master/client/build-project.sh
     - https://raw.githubusercontent.com/bamachrn/cccp-service/master/client/send_build_request.py
     - https://raw.githubusercontent.com/bamachrn/cccp-service/master/client/beanstalkc.py
-    - https://raw.githubusercontent.com/bamachrn/cccp-service/master/client/worker_start_build.py
 
 - name: Copy openshift template file
   template:
