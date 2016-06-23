@@ -29,3 +29,8 @@
 - include: setup_worker.yml
   tags:
   - beanstalk/worker 
+
+- include: monitor.yml
+  tags:
+      - jenkins
+      - monitor
