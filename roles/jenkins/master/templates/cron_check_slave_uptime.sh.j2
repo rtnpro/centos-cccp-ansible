@@ -1,0 +1,12 @@
+#!/bin/bash
+target_host="{{ groups['jenkins_slaves'][0] }}"
+priv_key="/etc/jenkins/id_rsa"
+zabbix_item="jenkins.master-slave.ssh"
+
+ssh -i ${priv_key} ${target_host} hostname
+
+if [ $? = "0" ] ;then
+  zabbix_sender -c /etc/zabbix/zabbix_agentd.conf -k ${jenkins.master-slave.ssh} -o 0 >/dev/null
+else
+  zabbix_sender -c /etc/zabbix/zabbix_agentd.conf -k ${jenkins.master-slave.ssh} -o 1 >/dev/null
+fi
