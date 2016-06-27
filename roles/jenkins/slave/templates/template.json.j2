@@ -60,6 +60,11 @@
       "description": "Path to tests in a repository",
       "value": "/tests",
       "required": true
+    },
+	{
+      "name": "BEANSTALK_SERVER",
+      "description": "An url for the server where beanstalkd runs",
+      "value": "{{ beanstalk_server }}"
     }
   ],
   "objects": [
@@ -118,7 +123,12 @@
               {
                 "name": "DOCKERFILE_NAME",
                 "value": "${DOCKERFILE_NAME}"
+              },
+              {
+                "name": "NOTIFY_EMAIL",
+                "value": "${NOTIFY_EMAIL}"
               }
+
             ]
           }
         },
@@ -178,6 +188,10 @@
               {
                 "name": "SOURCE_REPOSITORY_URL",
                 "value": "${SOURCE_REPOSITORY_URL}"
+              },
+              {
+                "name": "NOTIFY_EMAIL",
+                "value": "${NOTIFY_EMAIL}"
               }
 
             ]
@@ -239,6 +253,10 @@
               {
                 "name": "TARGET_NAMESPACE",
                 "value": "${TARGET_NAMESPACE}"
+              },
+              {
+                "name": "BEANSTALK_SERVER",
+                "value": "${BEANSTALK_SERVER}"
               },
               {
                 "name": "NOTIFY_EMAIL",
