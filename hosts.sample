@@ -15,6 +15,7 @@ openshift
 [all:vars]
 # update as needed
 public_registry=jenkins-slave
+beanstalk_server=openshift
 
 [jenkins_master:vars]
 # update as needed

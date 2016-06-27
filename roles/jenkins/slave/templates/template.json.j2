@@ -60,7 +60,12 @@
       "description": "Path to tests in a repository",
       "value": "/tests",
       "required": true
-    }
+    },
+	{
+      "name": "BEANSTALK_SERVER",
+      "description": "An url for the server where beanstalkd runs",
+      "value": "{{ beanstalk_server }}"
+    },
   ],
   "objects": [
     {
@@ -248,6 +253,10 @@
               {
                 "name": "TARGET_NAMESPACE",
                 "value": "${TARGET_NAMESPACE}"
+              },
+              {
+                "name": "BEANSTALK_SERVER",
+                "value": "${BEANSTALK_SERVER}"
               },
               {
                 "name": "NOTIFY_EMAIL",
