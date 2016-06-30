@@ -50,8 +50,8 @@
       "required": true
     },
     {
-       "name": "DOCKERFILE_NAME",
-       "description": "Name of the dockerfile to be built",
+       "name": "TARGET_FILE",
+       "description": "Name of the file to be built usually Dockerfile",
        "value": "Dockerfile",
        "required": true
     },
@@ -121,8 +121,8 @@
                 "value": "${REPO_BUILD_PATH}"
               },
               {
-                "name": "DOCKERFILE_NAME",
-                "value": "${DOCKERFILE_NAME}"
+                "name": "TARGET_FILE",
+                "value": "${TARGET_FILE}"
               },
               {
                 "name": "NOTIFY_EMAIL",
