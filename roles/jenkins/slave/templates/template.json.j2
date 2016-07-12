@@ -18,6 +18,12 @@
       "required": true
     },
     {
+      "name": "REPO_BRANCH",
+      "description": "Branch of the repository to be built",
+      "value": "",
+      "required": true
+    },
+    {
       "name": "BUILD_TRIGGER_SECRET",
       "description": "A secret to be used to trigger a build via Origin API",
       "value": "secret101"
@@ -115,6 +121,10 @@
               {
                 "name": "SOURCE_REPOSITORY_URL",
                 "value": "${SOURCE_REPOSITORY_URL}"
+              },
+              {
+                "name": "REPO_BRANCH",
+                "value": "${REPO_BRANCH}"
               },
               {
                 "name": "REPO_BUILD_PATH",
