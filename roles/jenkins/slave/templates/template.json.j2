@@ -218,7 +218,16 @@
               "generic": {
               "secret": "${BUILD_TRIGGER_SECRET}"
             }
-          }
+           },
+           {
+            "type": "ImageChange",
+            "imageChange": {
+            "from": {
+                "kind": "ImageStreamTag",
+                "name": "${TAG}:rc"
+                }
+             }
+           }
         ],
         "strategy": { 
           "type": "Custom",
