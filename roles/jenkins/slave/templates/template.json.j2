@@ -18,6 +18,12 @@
       "required": true
     },
     {
+      "name": "REPO_BRANCH",
+      "description": "Branch of the repository to be built",
+      "value": "",
+      "required": true
+    },
+    {
       "name": "BUILD_TRIGGER_SECRET",
       "description": "A secret to be used to trigger a build via Origin API",
       "value": "secret101"
@@ -50,8 +56,8 @@
       "required": true
     },
     {
-       "name": "DOCKERFILE_NAME",
-       "description": "Name of the dockerfile to be built",
+       "name": "TARGET_FILE",
+       "description": "Name of the file to be built usually Dockerfile",
        "value": "Dockerfile",
        "required": true
     },
@@ -117,12 +123,16 @@
                 "value": "${SOURCE_REPOSITORY_URL}"
               },
               {
+                "name": "REPO_BRANCH",
+                "value": "${REPO_BRANCH}"
+              },
+              {
                 "name": "REPO_BUILD_PATH",
                 "value": "${REPO_BUILD_PATH}"
               },
               {
-                "name": "DOCKERFILE_NAME",
-                "value": "${DOCKERFILE_NAME}"
+                "name": "TARGET_FILE",
+                "value": "${TARGET_FILE}"
               },
               {
                 "name": "NOTIFY_EMAIL",
@@ -192,8 +202,23 @@
               {
                 "name": "NOTIFY_EMAIL",
                 "value": "${NOTIFY_EMAIL}"
+              },
+              {
+                "name": "TARGET_REGISTRY",
+                "value": "${TARGET_REGISTRY}"
+              },
+              {
+                "name":"TARGET_NAMESPACE",
+                "value":"${TARGET_NAMESPACE}"
+              },
+              {
+                "name":"TAG",
+                "value":"${TAG}"
+              },
+              {
+                "name": "BEANSTALK_SERVER",
+                "value": "${BEANSTALK_SERVER}"
               }
-
             ]
           }
         },
@@ -217,15 +242,6 @@
             "type": "Generic",
               "generic": {
               "secret": "${BUILD_TRIGGER_SECRET}"
-            }
-          },
-          {
-            "type": "ImageChange",
-            "imageChange": {
-              "from": {
-                "kind": "ImageStreamTag",
-                "name": "${TAG}:rc"
-              }
             }
           }
         ],
