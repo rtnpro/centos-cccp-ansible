@@ -28,7 +28,7 @@
     - https://raw.githubusercontent.com/bamachrn/cccp-service/master/beanstalk_worker/beanstalkc.py
     - https://raw.githubusercontent.com/bamachrn/cccp-service/master/beanstalk_worker/worker_start_build.py
     - https://raw.githubusercontent.com/bamachrn/cccp-service/master/beanstalk_worker/DependencyChecker.py
-    - https://raw.githubusercontent.com/bamachrn/cccp-service/master/beanstalk_worker/worker_test_suite.py
+    - https://raw.githubusercontent.com/bamachrn/cccp-service/master/beanstalk_worker/worker_start_test.py
     - https://raw.githubusercontent.com/bamachrn/cccp-service/master/beanstalk_worker/worker_dispatcher.py
     - https://raw.githubusercontent.com/bamachrn/cccp-service/master/beanstalk_worker/worker_start_delivery.py
 
