@@ -57,8 +57,3 @@
   shell: docker build -t cccp-delivery -f ./Dockerfile.delivery .
   args:
       chdir: "{{ ansible_env.HOME }}/cccp-service/server"
-
-- name: Build mail server image
-  shell: docker build -t mail-server -f ./Dockerfile.mailserv .
-  args:
-      chdir: "{{ ansible_env.HOME }}/cccp-service/mail_service"
